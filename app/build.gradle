@@ -1,0 +1,88 @@
+apply plugin: Plugins.androidApplication
+apply plugin: Plugins.kotlinAndroid
+apply plugin: Plugins.kotlinSerialization
+apply plugin: Plugins.hiltAndroidPlugin
+apply plugin: Plugins.kotlinApt
+apply plugin: Plugins.navigationSafeArgsKotlin
+
+android {
+    compileSdk AppConfig.compileSdkVersion
+
+    defaultConfig {
+        applicationId AppConfig.applicationId
+        minSdk AppConfig.minSdkVersion
+        targetSdk AppConfig.targetSdkVersion
+        versionCode AppConfig.versionCode
+        versionName AppConfig.versionName
+
+        testInstrumentationRunner AppConfig.testInstrumentationRunner
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    lintOptions {
+        abortOnError false
+        // Because of annotation-experimental
+        disable("UnsafeExperimentalUsageError", "UnsafeExperimentalUsageWarning")
+    }
+
+    kapt {
+        correctErrorTypes = true
+    }
+}
+
+dependencies {
+    implementation project(Modules.data)
+    implementation project(Modules.domain)
+    implementation project(Modules.usecase)
+    //KOTLIN
+    implementation Kotlin.coroutineAndroid
+    implementation Kotlin.coroutineCore
+    implementation Kotlin.coreKtx
+    implementation Kotlin.serializationJson
+    // ANDROID
+    implementation Androidx.appCompat
+    implementation Androidx.material
+    implementation Androidx.constraintLayout
+    implementation Androidx.lifecycleViewModel
+    implementation Androidx.navigation
+    implementation Androidx.navigationFrag
+    implementation Androidx.recyclerView
+    implementation Androidx.swipeRefreshLayout
+    // DAGGER HILT
+    implementation Hilt.android
+    kapt Hilt.androidCompiler
+    implementation Hilt.lifecycleViewModel
+    //ARROW
+    implementation Arrow.core
+    //RETROFIT
+    implementation Retrofit.core
+    implementation Retrofit.kotlinSerialization
+    implementation Retrofit.httpLoggingInterceptor
+    //GLIDE
+    implementation Glide.core
+    kapt Glide.compiler
+    //ROOM
+    implementation Room.runtime
+    kapt Room.compiler
+    //SHIMMER
+    implementation Shimmer.core
+}

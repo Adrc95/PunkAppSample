@@ -1,0 +1,16 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+
+dependencies {
+    implementation project(Modules.data)
+    implementation project(Modules.domain)
+    implementation Arrow.core
+    implementation  Kotlin.coroutineAndroid
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">PunkAppSample</string>
+    <string name="description_header">Description</string>
+    <string name="information_header">Information</string>
+    <string name="abv_text">ABV - %1$s</string>
+    <string name="detail_info_text"><![CDATA[<b>Malts:</b><br/>%1$s<br/><b>Hops:</b><br/>%2$s<br/><b>Food Parings:</b><br/>%3$s]]></string>
+    <string name="loading_beer_error">Sorry cannot load data please check network connection</string>
+    <string name="hint_search">Are you looking for one in particular?</string>
+</resources>
