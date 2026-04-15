@@ -1,7 +1,7 @@
 package com.adrc95.punkappsample.di
 
-import com.adrc95.data.repository.BeersRepository
-import com.adrc95.data.repository.BeersRepositoryImpl
+import com.adrc95.data.repository.BeerRepositoryImpl
+import com.adrc95.domain.repository.BeerRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,6 +13,6 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindBeersRepository(
-        beersRepository: BeersRepositoryImpl
-    ): BeersRepository
+        beersRepository: BeerRepositoryImpl
+    ): BeerRepository
 }

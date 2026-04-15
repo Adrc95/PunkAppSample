@@ -21,6 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Punkappsample"
 include(":app")
-include(":usecase")
 include(":domain")
 include(":data")

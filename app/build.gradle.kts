@@ -57,7 +57,6 @@ android {
 dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
-    implementation(project(":usecase"))
     //KOTLIN
     implementation(libs.kotlin.coroutines.android)
     implementation(libs.kotlin.coroutines.core)

@@ -24,3 +24,8 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 }
+
+dependencies {
+    implementation(libs.arrow.core)
+    implementation(libs.inject.javax.inject)
+}

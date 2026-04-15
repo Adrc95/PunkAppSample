@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.adrc95.domain.usecase.GetBeers
 import com.adrc95.domain.model.Beer
 import com.adrc95.punkappsample.ui.common.Event
-import com.adrc95.usecase.GetBeers
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
