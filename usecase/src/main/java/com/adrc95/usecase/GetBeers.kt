@@ -1,16 +1,16 @@
 package com.adrc95.usecase
 
+import arrow.core.Either
 import com.adrc95.data.repository.BeersRepository
+import com.adrc95.domain.exception.ApiError
 import com.adrc95.domain.model.Beer
-import com.adrc95.usecase.base.UseCase
 import javax.inject.Inject
 
-class GetBeers @Inject constructor(private val beersRepository: BeersRepository) :
-    UseCase<GetBeers.Params, List<Beer>>() {
+class GetBeers @Inject constructor(private val beersRepository: BeersRepository) {
 
-    override suspend fun run(params: Params) =
-        beersRepository.getBeers(params.page, params.itemsPerPage)
-
-    data class Params(val page: Int, val itemsPerPage: Int)
+    suspend operator fun invoke(
+        page: Int,
+        itemsPerPage: Int,
+    ): Either<ApiError, List<Beer>> = beersRepository.getBeers(page, itemsPerPage)
 
 }
