@@ -3,21 +3,19 @@ package com.adrc95.punkappsample.ui.beerlist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import arrow.core.Either
-import com.adrc95.domain.exception.ApiError
+import androidx.lifecycle.viewModelScope
 import com.adrc95.domain.model.Beer
 import com.adrc95.punkappsample.ui.common.Event
 import com.adrc95.usecase.GetBeers
-import com.adrc95.usecase.base.Invoker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class BeerListViewModel @Inject constructor(
-    private val invoker: Invoker,
     private val getBeers: GetBeers
 ) : ViewModel() {
 
@@ -46,16 +44,13 @@ class BeerListViewModel @Inject constructor(
     private fun loadBeers(page: Int = 1, refresh: Boolean = false) {
         this.refresh = refresh
         _state.value = BeerListViewState.Loading
-        val params = GetBeers.Params(page, ITEMS_PER_PAGE)
-        invoker.execute(getBeers, params, ::onBeersArrived)
-    }
-
-    private fun onBeersArrived(result: Either<ApiError, List<Beer>>) {
-        result.fold(ifLeft = {
-            _error.value = Event(Unit)
-        }, ifRight = {
-            _state.value = BeerListViewState.ShowBeers(it, refresh)
-        })
+        viewModelScope.launch {
+            getBeers(page, ITEMS_PER_PAGE).fold(ifLeft = {
+                _error.value = Event(Unit)
+            }, ifRight = {
+                _state.value = BeerListViewState.ShowBeers(it, refresh)
+            })
+        }
     }
 
     fun onLoadMore(page: Int) {
@@ -75,6 +70,5 @@ class BeerListViewModel @Inject constructor(
             _enabledEndlessScroll.value = Event(query.isEmpty())
             _state.value = BeerListViewState.ChangeSearchText(query)
         }
-
     }
 }
