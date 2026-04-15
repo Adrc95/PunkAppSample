@@ -5,12 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.adrc95.punkappsample.data.Beer
 import com.adrc95.punkappsample.data.dao.PunkDao
+import com.adrc95.punkappsample.data.entity.BeerEntity
 
 @TypeConverters(RequestConverters::class)
 @Database(
-    entities = [Beer::class],
+    entities = [BeerEntity::class],
     version = 1,
     exportSchema = false
 )

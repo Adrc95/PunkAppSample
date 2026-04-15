@@ -14,11 +14,12 @@ import dagger.hilt.android.components.ViewModelComponent
 object DetailModule {
 
     @Provides
-    fun provideDetailViewModel(savedStateHandle: SavedStateHandle,
-                               invoker: Invoker, getBeer: GetBeer): DetailViewModel
-            = DetailViewModel(savedStateHandle, invoker, getBeer)
+    fun provideDetailViewModel(
+        savedStateHandle: SavedStateHandle,
+        invoker: Invoker, getBeer: GetBeer
+    ): DetailViewModel = DetailViewModel(savedStateHandle, invoker, getBeer)
 
     @Provides
-    fun provideGetDetailUseCase(beersRepository: BeersRepository): GetBeer
-            = GetBeer(beersRepository)
+    fun provideGetDetailUseCase(beersRepository: BeersRepository): GetBeer =
+        GetBeer(beersRepository)
 }

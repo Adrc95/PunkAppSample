@@ -12,11 +12,12 @@ import com.adrc95.punkappsample.ui.common.extension.basicDiffUtil
 import com.adrc95.punkappsample.ui.common.extension.inflate
 import kotlin.properties.Delegates
 
-class BeerAdapter(private val listener: (Beer) -> Unit) : RecyclerView.Adapter<BeerViewHolder>(), Filterable  {
+class BeerAdapter(private val listener: (Beer) -> Unit) : RecyclerView.Adapter<BeerViewHolder>(),
+    Filterable {
 
     var filterBeers: List<Beer> by basicDiffUtil(
         emptyList(),
-        areContentsTheSame = {old, new -> old == new},
+        areContentsTheSame = { old, new -> old == new },
         areItemsTheSame = { old, new -> old.id == new.id }
     )
 
@@ -53,11 +54,11 @@ class BeerAdapter(private val listener: (Beer) -> Unit) : RecyclerView.Adapter<B
         }
 
         override fun publishResults(constraint: CharSequence, results: FilterResults) {
-                Handler(Looper.getMainLooper()).postDelayed( {
-                    if (results.values is List<*>) {
-                        filterBeers = results.values as List<Beer>
-                    }
-                }, 500)
+            Handler(Looper.getMainLooper()).postDelayed({
+                if (results.values is List<*>) {
+                    filterBeers = results.values as List<Beer>
+                }
+            }, 500)
         }
     }
 }

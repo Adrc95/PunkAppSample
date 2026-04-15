@@ -1,41 +1,43 @@
 package com.adrc95.punkappsample.data.db
 
 import androidx.room.TypeConverter
-import com.adrc95.punkappsample.data.Hop
-import com.adrc95.punkappsample.data.Malt
-import com.adrc95.punkappsample.data.MashTemp
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
+import com.adrc95.punkappsample.data.entity.BoilVolumeEntity
+import com.adrc95.punkappsample.data.entity.IngredientsEntity
+import com.adrc95.punkappsample.data.entity.MethodEntity
 import kotlinx.serialization.json.Json
 
 class RequestConverters {
 
     @TypeConverter
-    fun listStringToJsonStr(listMyModel: List<String>?): String = Json.encodeToString(listMyModel)
+    fun listStringToJsonStr(values: List<String>?): String = Json.encodeToString(values)
 
     @TypeConverter
-    fun jsonStrToListString(jsonStr: String?): List<String>? =
-    jsonStr?.let { Json.decodeFromString<List<String>>(jsonStr) }
+    fun jsonStrToListString(jsonStr: String?): List<String>? = jsonStr?.let {
+        Json.decodeFromString<List<String>>(it)
+    }
 
     @TypeConverter
-    fun listMashToJsonStr(listMash: List<MashTemp>?): String = Json.encodeToString(listMash)
+    fun ingredientsToJsonStr(ingredients: IngredientsEntity?): String = Json.encodeToString(ingredients)
 
     @TypeConverter
-    fun jsonMashToListString(jsonStr: String?): List<MashTemp>? =
-        jsonStr?.let { Json.decodeFromString<List<MashTemp>>(jsonStr) }
+    fun jsonStrToIngredients(jsonStr: String?): IngredientsEntity? = jsonStr?.let {
+        Json.decodeFromString<IngredientsEntity>(it)
+    }
 
     @TypeConverter
-    fun listMaltToJsonStr(listMalt: List<Malt>?): String = Json.encodeToString(listMalt)
+    fun boilVolumeToJsonStr(boilVolume: BoilVolumeEntity?): String = Json.encodeToString(boilVolume)
 
     @TypeConverter
-    fun jsonMaltToListString(jsonStr: String?): List<Malt>? =
-        jsonStr?.let { Json.decodeFromString<List<Malt>>(jsonStr) }
+    fun jsonStrToBoilVolume(jsonStr: String?): BoilVolumeEntity? = jsonStr?.let {
+        Json.decodeFromString<BoilVolumeEntity>(it)
+    }
 
     @TypeConverter
-    fun listHopToJsonStr(listHop: List<Hop>?): String = Json.encodeToString(listHop)
+    fun methodToJsonStr(method: MethodEntity?): String = Json.encodeToString(method)
 
     @TypeConverter
-    fun jsonHopToListString(jsonStr: String?): List<Hop>? =
-        jsonStr?.let {  Json.decodeFromString<List<Hop>>(jsonStr) }
+    fun jsonStrToMethod(jsonStr: String?): MethodEntity? = jsonStr?.let {
+        Json.decodeFromString<MethodEntity>(it)
+    }
 
 }

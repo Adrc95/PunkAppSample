@@ -13,10 +13,10 @@ import dagger.hilt.android.components.ViewModelComponent
 object BeerListModule {
 
     @Provides
-    fun provideBeerListViewModel(invoker: Invoker, getBeers: GetBeers): BeerListViewModel
-            = BeerListViewModel(invoker, getBeers)
+    fun provideBeerListViewModel(invoker: Invoker, getBeers: GetBeers): BeerListViewModel =
+        BeerListViewModel(invoker, getBeers)
 
     @Provides
-    fun provideGetBeersUseCase(beersRepository: BeersRepository): GetBeers
-            = GetBeers(beersRepository)
+    fun provideGetBeersUseCase(beersRepository: BeersRepository): GetBeers =
+        GetBeers(beersRepository)
 }

@@ -16,21 +16,23 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class BeerListViewModel @Inject constructor (private val invoker: Invoker,
-                                             private val getBeers: GetBeers) : ViewModel() {
+class BeerListViewModel @Inject constructor(
+    private val invoker: Invoker,
+    private val getBeers: GetBeers
+) : ViewModel() {
 
     companion object {
         const val ITEMS_PER_PAGE = 30
     }
 
     private val _state = MutableStateFlow<BeerListViewState>(BeerListViewState.LoadBeers)
-    val state : StateFlow<BeerListViewState> = _state.asStateFlow()
+    val state: StateFlow<BeerListViewState> = _state.asStateFlow()
 
     private val _enabledEndlessScroll = MutableLiveData<Event<Boolean>>()
-    val enabledEndlessScroll : LiveData<Event<Boolean>> = _enabledEndlessScroll
+    val enabledEndlessScroll: LiveData<Event<Boolean>> = _enabledEndlessScroll
 
     private val _error = MutableLiveData<Event<Unit>>()
-    val error : LiveData<Event<Unit>> = _error
+    val error: LiveData<Event<Unit>> = _error
 
     private val _navigateToBeerDetail = MutableLiveData<Event<Beer>>()
     val navigateToBeerDetail: LiveData<Event<Beer>> = _navigateToBeerDetail
@@ -68,7 +70,7 @@ class BeerListViewModel @Inject constructor (private val invoker: Invoker,
         loadBeers(refresh = true)
     }
 
-    fun onQueryTextChange(query : String?) {
+    fun onQueryTextChange(query: String?) {
         query?.let {
             _enabledEndlessScroll.value = Event(query.isEmpty())
             _state.value = BeerListViewState.ChangeSearchText(query)

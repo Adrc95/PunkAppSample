@@ -30,7 +30,7 @@ class BeerListFragment : BaseFragment<FragmentBeerListBinding>(), SearchView.OnQ
 
     private lateinit var navController: NavController
 
-    private lateinit var scrollListener : EndlessRecyclerOnScrollListener
+    private lateinit var scrollListener: EndlessRecyclerOnScrollListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +53,10 @@ class BeerListFragment : BaseFragment<FragmentBeerListBinding>(), SearchView.OnQ
         searchView.maxWidth = Integer.MAX_VALUE
     }
 
-    override fun bindView(layoutInflater: LayoutInflater, container: ViewGroup?): FragmentBeerListBinding =
+    override fun bindView(
+        layoutInflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentBeerListBinding =
         FragmentBeerListBinding.inflate(layoutInflater, container, false)
 
 
@@ -70,7 +73,7 @@ class BeerListFragment : BaseFragment<FragmentBeerListBinding>(), SearchView.OnQ
     }
 
     private fun initializeEvents() {
-        viewModel.error.observe(this, EventObserver {
+        viewModel.error.observe(viewLifecycleOwner, EventObserver {
             displayLoadingError()
         })
 
@@ -100,7 +103,7 @@ class BeerListFragment : BaseFragment<FragmentBeerListBinding>(), SearchView.OnQ
         binding.rvBeers.addOnScrollListener(scrollListener)
     }
 
-    private fun initPullDownRefresh()  = with(binding) {
+    private fun initPullDownRefresh() = with(binding) {
         refreshLayout.setOnRefreshListener {
             scrollListener.resetState()
             viewModel.onRefreshBeers()
@@ -108,17 +111,17 @@ class BeerListFragment : BaseFragment<FragmentBeerListBinding>(), SearchView.OnQ
     }
 
     private fun initializeNavigation() {
-        viewModel.navigateToBeerDetail.observe(this, EventObserver { beer ->
+        viewModel.navigateToBeerDetail.observe(viewLifecycleOwner, EventObserver { beer ->
             val action = BeerListFragmentDirections.actionListBeerFragmentToDetailFragment(beer.id)
             navController.navigate(action)
         })
 
-        viewModel.error.observe(this, EventObserver {
-           displayLoadingError()
+        viewModel.error.observe(viewLifecycleOwner, EventObserver {
+            displayLoadingError()
         })
 
-        viewModel.enabledEndlessScroll.observe(this, EventObserver {
-          enabledEndlessScroll(it)
+        viewModel.enabledEndlessScroll.observe(viewLifecycleOwner, EventObserver {
+            enabledEndlessScroll(it)
         })
     }
 
@@ -127,8 +130,7 @@ class BeerListFragment : BaseFragment<FragmentBeerListBinding>(), SearchView.OnQ
 
         if (state is BeerListViewState.Loading) {
             showLoading()
-        }
-        else {
+        } else {
             hideLoading()
         }
 
@@ -136,12 +138,16 @@ class BeerListFragment : BaseFragment<FragmentBeerListBinding>(), SearchView.OnQ
             is BeerListViewState.ShowBeers -> {
                 renderBeers(state.beers, state.refresh)
             }
+
             is BeerListViewState.LoadBeers -> {
                 viewModel.onLoadBeers()
             }
+
             is BeerListViewState.ChangeSearchText -> {
                 changeSearchText(state.query)
             }
+
+            else -> {}
         }
     }
 
@@ -153,12 +159,12 @@ class BeerListFragment : BaseFragment<FragmentBeerListBinding>(), SearchView.OnQ
         adapter.filter.filter(query)
     }
 
-    private fun showLoading() = with(binding)  {
+    private fun showLoading() = with(binding) {
         refreshLayout.isRefreshing = true
         shimmerViewContainer.setVisible(true)
     }
 
-    private fun hideLoading() = with(binding)  {
+    private fun hideLoading() = with(binding) {
         refreshLayout.isRefreshing = false
         shimmerViewContainer.setVisible(false)
     }
@@ -166,8 +172,7 @@ class BeerListFragment : BaseFragment<FragmentBeerListBinding>(), SearchView.OnQ
     private fun renderBeers(beers: List<Beer>, refresh: Boolean) {
         if (refresh) {
             adapter.beers = beers
-        }
-        else {
+        } else {
             adapter.beers = adapter.beers + beers
         }
     }
@@ -178,12 +183,12 @@ class BeerListFragment : BaseFragment<FragmentBeerListBinding>(), SearchView.OnQ
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        return  false
+        return false
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
         viewModel.onQueryTextChange(newText)
-        return  true
+        return true
     }
 
 

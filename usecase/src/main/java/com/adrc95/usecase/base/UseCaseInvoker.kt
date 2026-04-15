@@ -6,9 +6,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class UseCaseInvoker : Invoker, CoroutineScope {
+class UseCaseInvoker @Inject constructor() : Invoker, CoroutineScope {
 
   override val coroutineContext: CoroutineContext = Dispatchers.Default
 

@@ -1,17 +1,35 @@
 plugins {
     alias(libs.plugins.android.library)
-    id 'kotlin'
+    alias(libs.plugins.kotlin.android)
+}
+
+android {
+    namespace = "com.adrc95.usecase"
+    compileSdk {
+        version = release(37)
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 }
 
 dependencies {
-    implementation(project(Modules.data))
-    implementation(project(Modules.domain))
+    implementation(project(":data"))
+    implementation(project(":domain"))
     testImplementation(libs.junit)
-    implementation(arrow.core)
-    implementation(kotlin.coroutines.android)
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    implementation(libs.arrow.core)
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.inject.javax.inject)
 }

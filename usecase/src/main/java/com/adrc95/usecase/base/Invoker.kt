@@ -5,7 +5,9 @@ import com.adrc95.domain.exception.ApiError
 
 interface Invoker {
 
-  fun <Params, Type : Any> execute(useCase: UseCase<Params, Type>,
-                                   params: Params,
-                                   onResult: (Either<ApiError, Type>) -> Unit)
+    fun <Params, Type : Any> execute(
+        useCase: UseCase<Params, Type>,
+        params: Params,
+        onResult: (Either<ApiError, Type>) -> Unit
+    )
 }

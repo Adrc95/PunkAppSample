@@ -1,6 +1,6 @@
 package com.adrc95.punkappsample.di
 
-import androidx.viewbinding.BuildConfig
+import com.adrc95.punkappsample.BuildConfig
 import com.adrc95.punkappsample.data.service.APIService
 import com.adrc95.punkappsample.data.service.PunkApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -22,9 +22,7 @@ object NetworkModule {
 
     @Provides
     @Named("punkapi")
-    fun providesEndpoint(): String {
-        return "https://api.punkapi.com/v2/"
-    }
+    fun providesEndpoint(): String = "https://punkapi-alxiw.amvera.io/v3/"
 
     @Provides
     @Singleton
@@ -42,6 +40,7 @@ object NetworkModule {
     fun provideJsonFactory(): Converter.Factory {
         val contentType = "application/json".toMediaType()
         return Json {
+            isLenient = true
             ignoreUnknownKeys = true
             coerceInputValues = true
         }.asConverterFactory(contentType)

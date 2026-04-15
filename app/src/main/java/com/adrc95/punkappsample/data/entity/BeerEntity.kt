@@ -1,98 +1,91 @@
-package com.adrc95.punkappsample.data
+package com.adrc95.punkappsample.data.entity
 
-import androidx.room.Embedded
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable
 @Entity(tableName = "Beers")
-data class Beer(
-    @PrimaryKey()
+data class BeerEntity(
+    @PrimaryKey
     val id: Long,
     val name: String?,
     val tagline: String?,
-    @SerialName("first_brewed")
+    @ColumnInfo("first_brewed")
     val firstBrewed: String?,
     val description: String?,
-    @SerialName("image_url")
+    @ColumnInfo("image_url")
     val imageURL: String?,
     val abv: Double?,
     val ibu: Double?,
-    @SerialName("target_fg")
+    @ColumnInfo("target_fg")
     val targetFg: Double?,
-    @SerialName("target_og")
+    @ColumnInfo("target_og")
     val targetOg: Double?,
     val ebc: Double?,
     val srm: Double?,
     val ph: Double?,
-    @SerialName("attenuation_level")
+    @ColumnInfo("attenuation_level")
     val attenuationLevel: Double?,
-    @Embedded(prefix = "volume_")
-    val volume: BoilVolume?,
-    @Embedded(prefix = "boilVolume_")
-    @SerialName("boil_volume")
-    val boilVolume: BoilVolume?,
-    @Embedded
-    val method: Method?,
-    @Embedded
-    val ingredients: Ingredients?,
-    @SerialName("food_pairing")
+    @ColumnInfo("volume")
+    val volume: BoilVolumeEntity?,
+    @ColumnInfo("boil_volume")
+    val boilVolume: BoilVolumeEntity?,
+    @ColumnInfo("method")
+    val method: MethodEntity?,
+    @ColumnInfo("ingredients")
+    val ingredients: IngredientsEntity?,
+    @ColumnInfo("food_pairing")
     val foodPairings: List<String>?,
-    @SerialName("brewers_tips")
+    @ColumnInfo("brewers_tips")
     val brewersTips: String?,
-    @SerialName("contributed_by")
-    val contributedBy: String?
+    @ColumnInfo("contributed_by")
+    val contributedBy: String?,
+    @ColumnInfo("updated_at")
+    val updatedAt: Long
 )
 
 @Serializable
-data class BoilVolume(
+data class BoilVolumeEntity(
     val value: Double?,
     val unit: String?
 )
 
 @Serializable
-data class Ingredients(
-    val malt: List<Malt>?,
-    val hops: List<Hop>?,
+data class IngredientsEntity(
+    val malt: List<MaltEntity>?,
+    val hops: List<HopEntity>?,
     val yeast: String?
 )
 
 @Serializable
-data class Hop(
+data class HopEntity(
     val name: String?,
-    @Embedded(prefix = "hop_")
-    val amount: BoilVolume?,
+    val amount: BoilVolumeEntity?,
     val add: String?,
     val attribute: String?
 )
 
 @Serializable
-data class Malt(
+data class MaltEntity(
     val name: String?,
-    @Embedded(prefix = "malt_")
-    val amount: BoilVolume?
+    val amount: BoilVolumeEntity?
 )
 
 @Serializable
-data class Method(
-    @SerialName("mash_temp")
-    val mashTemp: List<MashTemp>?,
-    @Embedded
-    val fermentation: Fermentation?,
+data class MethodEntity(
+    val mashTemp: List<MashTempEntity>?,
+    val fermentation: FermentationEntity?,
     val twist: String?
 )
 
 @Serializable
-data class Fermentation(
-    @Embedded(prefix = "fermentation_")
-    val temp: BoilVolume?
+data class FermentationEntity(
+    val temp: BoilVolumeEntity?
 )
 
 @Serializable
-data class MashTemp(
-    @Embedded(prefix = "mash_temp_")
-    val temp: BoilVolume?,
+data class MashTempEntity(
+    val temp: BoilVolumeEntity?,
     val duration: Long?
 )

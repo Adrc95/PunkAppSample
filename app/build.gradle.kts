@@ -4,88 +4,90 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
-    alias(libs.plugin.navigation.safe.args)
+    alias(libs.plugins.navigation.safe.args)
 }
-
 android {
-    namespace = "com.adrc95.punkapp"
-    compileSdk AppConfig.compileSdkVersion
+    namespace = "com.adrc95.punkappsample"
+    compileSdk {
+        version = release(37)
+    }
 
     defaultConfig {
-        applicationId AppConfig.applicationId
-        minSdk AppConfig.minSdkVersion
-        targetSdk AppConfig.targetSdkVersion
-        versionCode AppConfig.versionCode
-        versionName AppConfig.versionName
-
-        testInstrumentationRunner AppConfig.testInstrumentationRunner
+        applicationId = "com.adrc95.punkappsample"
+        minSdk = 24
+        targetSdk = 37
+        versionCode = 1
+        versionName = "1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = '17'
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     buildFeatures {
-        viewBinding true
+        viewBinding = true
+        buildConfig = true
     }
 
-    lintOptions {
-        abortOnError false
-        // Because of annotation-experimental
-        disable("UnsafeExperimentalUsageError", "UnsafeExperimentalUsageWarning")
+    lint {
+        abortOnError = false
+        disable += listOf(
+            "UnsafeExperimentalUsageError",
+            "UnsafeExperimentalUsageWarning"
+        )
     }
 
-    kapt {
-        correctErrorTypes = true
+    kotlin {
+        jvmToolchain(17)
     }
 }
 
 dependencies {
-    implementation project(Modules.data)
-    implementation project(Modules.domain)
-    implementation project(Modules.usecase)
+    implementation(project(":data"))
+    implementation(project(":domain"))
+    implementation(project(":usecase"))
     //KOTLIN
-    implementation Kotlin.coroutineAndroid
-    implementation Kotlin.coroutineCore
-    implementation Kotlin.coreKtx
-    implementation Kotlin.serializationJson
+    implementation(libs.kotlin.coroutines.android)
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.kotlin.serialization.json)
     // ANDROID
-    implementation Androidx.appCompat
-    implementation Androidx.material
-    implementation Androidx.constraintLayout
-    implementation Androidx.lifecycleViewModel
-    implementation Androidx.navigation
-    implementation Androidx.navigationFrag
-    implementation Androidx.recyclerView
-    implementation Androidx.swipeRefreshLayout
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.navigation.ui)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.recyclerview )
+    implementation(libs.androidx.swiperefreshlayout)
     // DAGGER HILT
-    implementation Hilt.android
-    kapt Hilt.androidCompiler
-    implementation Hilt.lifecycleViewModel
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.hilt.lifecycle.viewmodel)
     //ARROW
-    implementation Arrow.core
+    implementation(libs.arrow.core)
     //RETROFIT
-    implementation Retrofit.core
-    implementation Retrofit.kotlinSerialization
-    implementation Retrofit.httpLoggingInterceptor
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.kotlin.serialization)
+    implementation(libs.okhttp.logging)
     //GLIDE
-    implementation Glide.core
-    kapt Glide.compiler
+    implementation(libs.glide.core)
+    ksp(libs.glide.compiler)
     //ROOM
-    implementation Room.runtime
-    kapt Room.compiler
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
     //SHIMMER
-    implementation Shimmer.core
+    implementation(libs.shimmer)
 }

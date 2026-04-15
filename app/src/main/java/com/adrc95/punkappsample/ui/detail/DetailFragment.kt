@@ -64,6 +64,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
             is DetailViewState.RenderBeer -> {
                 renderBeer(state.beer)
             }
+            else -> { }
         }
     }
 

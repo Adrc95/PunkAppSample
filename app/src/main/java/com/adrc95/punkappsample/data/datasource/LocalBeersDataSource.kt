@@ -8,8 +8,9 @@ import com.adrc95.domain.model.Beer
 import com.adrc95.punkappsample.data.dao.PunkDao
 import com.adrc95.punkappsample.data.mapper.toDomain
 import com.adrc95.punkappsample.data.mapper.toEntity
+import javax.inject.Inject
 
-class LocalBeersDataSource(private val punkDao: PunkDao) :
+class LocalBeersDataSource @Inject constructor(private val punkDao: PunkDao) :
     BeersLocalDataSource {
 
     override suspend fun getBeer(id: Long): Either<ApiError, Beer> {
