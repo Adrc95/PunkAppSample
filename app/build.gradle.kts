@@ -1,11 +1,14 @@
-apply plugin: Plugins.androidApplication
-apply plugin: Plugins.kotlinAndroid
-apply plugin: Plugins.kotlinSerialization
-apply plugin: Plugins.hiltAndroidPlugin
-apply plugin: Plugins.kotlinApt
-apply plugin: Plugins.navigationSafeArgsKotlin
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
+    alias(libs.plugin.navigation.safe.args)
+}
 
 android {
+    namespace = "com.adrc95.punkapp"
     compileSdk AppConfig.compileSdkVersion
 
     defaultConfig {
@@ -26,12 +29,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
 
     buildFeatures {
