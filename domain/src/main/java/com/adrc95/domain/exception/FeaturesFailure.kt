@@ -1,3 +1,3 @@
 package com.adrc95.domain.exception
 
-class BeerNotFound : ApiError.FeatureFailure()
+class BeerNotFound : Error.FeatureFailure()

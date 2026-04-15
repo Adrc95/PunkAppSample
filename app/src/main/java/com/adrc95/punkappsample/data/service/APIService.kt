@@ -1,6 +1,5 @@
 package com.adrc95.punkappsample.data.service
 
-import com.adrc95.punkappsample.common.EitherCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Converter
@@ -26,7 +25,6 @@ class APIService<T> constructor(
         return Retrofit.Builder()
             .baseUrl(baseURL)
             .addConverterFactory(converterFactory)
-            .addCallAdapterFactory(EitherCallAdapterFactory())
             .client(client.build())
             .build()
     }

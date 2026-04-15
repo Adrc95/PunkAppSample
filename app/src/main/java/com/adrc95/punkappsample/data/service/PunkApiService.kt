@@ -1,7 +1,5 @@
 package com.adrc95.punkappsample.data.service
 
-import arrow.core.Either
-import com.adrc95.domain.exception.ApiError
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -12,8 +10,8 @@ interface PunkApiService {
     suspend fun getBeers(
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
-    ): Either<ApiError, List<BeerDto>>
+    ): List<BeerDto>
 
     @GET("beers/{id}")
-    suspend fun getBeer(@Path("id") id: Long): Either<ApiError, BeerDto>
+    suspend fun getBeer(@Path("id") id: Long): BeerDto
 }

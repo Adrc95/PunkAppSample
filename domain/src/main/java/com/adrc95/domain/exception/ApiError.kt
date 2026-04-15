@@ -1,11 +1,13 @@
 package com.adrc95.domain.exception
 
-sealed class ApiError {
-    data class HttpError(val code: Int) : ApiError()
+sealed class Error {
+    object Connectivity : Error()
 
-    data class NetworkError(val throwable: Throwable) : ApiError()
+    data class Server(val code: Int) : Error()
 
-    data class UnknownApiError(val throwable: Throwable) : ApiError()
+    data class Unknown(val message: String) : Error()
 
-    abstract class FeatureFailure : ApiError()
+    abstract class FeatureFailure : Error()
 }
+
+typealias ApiError = Error
