@@ -1,5 +1,6 @@
-package com.adrc95.punkappsample.data.service
+package com.adrc95.punkappsample.data.server.service
 
+import com.adrc95.punkappsample.data.server.model.BeerDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

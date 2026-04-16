@@ -1,10 +1,10 @@
-package com.adrc95.punkappsample.data.dao
+package com.adrc95.punkappsample.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.adrc95.punkappsample.data.entity.BeerEntity
+import com.adrc95.punkappsample.data.database.entity.BeerEntity
 
 @Dao
 interface PunkDao {

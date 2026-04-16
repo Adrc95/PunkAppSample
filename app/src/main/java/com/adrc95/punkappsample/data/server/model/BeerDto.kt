@@ -1,4 +1,4 @@
-package com.adrc95.punkappsample.data.service
+package com.adrc95.punkappsample.data.server.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

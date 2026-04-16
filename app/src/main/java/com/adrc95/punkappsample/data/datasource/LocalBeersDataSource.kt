@@ -5,9 +5,9 @@ import com.adrc95.data.source.BeersLocalDataSource
 import com.adrc95.domain.exception.ApiError
 import com.adrc95.domain.exception.BeerNotFound
 import com.adrc95.domain.model.Beer
-import com.adrc95.punkappsample.data.dao.PunkDao
-import com.adrc95.punkappsample.data.mapper.toDomain
-import com.adrc95.punkappsample.data.mapper.toEntity
+import com.adrc95.punkappsample.data.database.dao.PunkDao
+import com.adrc95.punkappsample.data.database.mapper.toDomain
+import com.adrc95.punkappsample.data.database.mapper.toEntity
 import javax.inject.Inject
 
 class LocalBeersDataSource @Inject constructor(private val punkDao: PunkDao) :

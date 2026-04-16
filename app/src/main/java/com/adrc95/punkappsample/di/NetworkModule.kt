@@ -1,7 +1,7 @@
 package com.adrc95.punkappsample.di
 
 import com.adrc95.punkappsample.BuildConfig
-import com.adrc95.punkappsample.data.service.PunkApiService
+import com.adrc95.punkappsample.data.server.service.PunkApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -19,7 +19,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-
     @Provides
     @Named("baseUrl")
     fun provideBaseUrl(): String = "https://punkapi-alxiw.amvera.io/v3/"

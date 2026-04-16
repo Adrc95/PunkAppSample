@@ -12,7 +12,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DataSourceModule {
-
     @Binds
     abstract fun bindBeersDataSource(remote : RemoteBeersDataSource): BeersNetworkDataSource
 

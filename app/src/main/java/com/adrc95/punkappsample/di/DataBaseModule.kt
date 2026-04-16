@@ -2,8 +2,8 @@ package com.adrc95.punkappsample.di
 
 import android.content.Context
 import androidx.room.Room
-import com.adrc95.punkappsample.data.dao.PunkDao
-import com.adrc95.punkappsample.data.db.PunkDataBase
+import com.adrc95.punkappsample.data.database.dao.PunkDao
+import com.adrc95.punkappsample.data.database.PunkDataBase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +14,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataBaseModule {
-
     @Provides
     @Singleton
     fun providesDatabase(@ApplicationContext context: Context): PunkDataBase =
@@ -27,5 +26,4 @@ object DataBaseModule {
     @Provides
     @Singleton
     fun providesPunkDao(db: PunkDataBase): PunkDao = db.punkDao()
-
 }

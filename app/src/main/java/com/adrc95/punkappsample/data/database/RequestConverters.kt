@@ -1,9 +1,9 @@
-package com.adrc95.punkappsample.data.db
+package com.adrc95.punkappsample.data.database
 
 import androidx.room.TypeConverter
-import com.adrc95.punkappsample.data.entity.BoilVolumeEntity
-import com.adrc95.punkappsample.data.entity.IngredientsEntity
-import com.adrc95.punkappsample.data.entity.MethodEntity
+import com.adrc95.punkappsample.data.database.entity.BoilVolumeEntity
+import com.adrc95.punkappsample.data.database.entity.IngredientsEntity
+import com.adrc95.punkappsample.data.database.entity.MethodEntity
 import kotlinx.serialization.json.Json
 
 class RequestConverters {

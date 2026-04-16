@@ -1,4 +1,4 @@
-package com.adrc95.punkappsample.data.entity
+package com.adrc95.punkappsample.data.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -1,10 +1,10 @@
-package com.adrc95.punkappsample.data.db
+package com.adrc95.punkappsample.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.adrc95.punkappsample.data.dao.PunkDao
-import com.adrc95.punkappsample.data.entity.BeerEntity
+import com.adrc95.punkappsample.data.database.dao.PunkDao
+import com.adrc95.punkappsample.data.database.entity.BeerEntity
 
 @TypeConverters(RequestConverters::class)
 @Database(
