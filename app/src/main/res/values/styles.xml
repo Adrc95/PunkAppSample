@@ -18,6 +18,12 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="Theme.PunkAppSample.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_logo</item>
+        <item name="postSplashScreenTheme">@style/AppTheme.NoActionBar</item>
+    </style>
+
     <style name="Widget.AppTheme.Toolbar" parent="Widget.AppCompat.Toolbar">
         <item name="background">?attr/colorAccent</item>
         <item name="theme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>

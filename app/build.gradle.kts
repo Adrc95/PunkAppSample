@@ -62,10 +62,10 @@ dependencies {
     implementation(project(":feature:beers:presentation"))
     implementation(project(":feature:beers:domain"))
     implementation(project(":feature:beers:data"))
-    implementation(project(":feature:splash:presentation"))
     //KOTLIN
     implementation(libs.kotlin.coroutines.android)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.kotlin.serialization.json)
     // ANDROID
     implementation(libs.androidx.appcompat)

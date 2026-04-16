@@ -12,9 +12,9 @@
         android:theme="@style/AppTheme" >
 
         <activity
-            android:name="com.adrc95.punkappsample.ui.splash.SplashScreenActivity"
-			android:exported="true"
-            android:theme="@style/AppTheme.FullScreen">
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.PunkAppSample.Splash">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,10 +23,6 @@
             </intent-filter>
 
         </activity>
-
-        <activity android:name=".ui.MainActivity"
-            android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>
 
