@@ -16,6 +16,8 @@ local.properties
 /gradle.properties
 /gradle/wrapper/gradle-wrapper.properties
 /build/
+/core/**/build/
+/feature/**/build/
 /.idea/vcs.xml
 /.idea/compiler.xml
 /.idea/misc.xml

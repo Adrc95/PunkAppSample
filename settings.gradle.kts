@@ -21,5 +21,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "Punkappsample"
 include(":app")
-include(":domain")
-include(":data")
+include(":core:common")
+include(":core:ui")
+include(":core:network")
+include(":core:database")
+include(":feature:beers:presentation")
+include(":feature:beers:domain")
+include(":feature:beers:data")
