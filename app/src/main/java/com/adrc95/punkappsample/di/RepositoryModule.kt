@@ -1,6 +1,6 @@
 package com.adrc95.punkappsample.di
 
-import com.adrc95.data.repository.BeerRepositoryImpl
+import com.adrc95.feature.beers.data.repository.BeerRepositoryImpl
 import com.adrc95.domain.repository.BeerRepository
 import dagger.Binds
 import dagger.Module

@@ -7,7 +7,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.adrc95.domain.model.Beer
-import com.adrc95.punkappsample.R
+import com.adrc95.feature.beers.presentation.R
 import com.adrc95.punkappsample.ui.common.extension.basicDiffUtil
 import com.adrc95.punkappsample.ui.common.extension.inflate
 import kotlin.properties.Delegates

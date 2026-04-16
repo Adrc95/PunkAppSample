@@ -1,5 +1,6 @@
 package com.adrc95.punkappsample.ui.beerlist
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
@@ -8,8 +9,8 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adrc95.domain.model.Beer
-import com.adrc95.punkappsample.R
-import com.adrc95.punkappsample.databinding.FragmentBeerListBinding
+import com.adrc95.feature.beers.presentation.databinding.FragmentBeerListBinding
+import com.adrc95.feature.beers.presentation.R
 import com.adrc95.punkappsample.ui.common.EndlessRecyclerOnScrollListener
 import com.adrc95.punkappsample.ui.common.EventObserver
 import com.adrc95.punkappsample.ui.common.extension.setVisible
@@ -112,8 +113,7 @@ class BeerListFragment : BaseFragment<FragmentBeerListBinding>(), SearchView.OnQ
 
     private fun initializeNavigation() {
         viewModel.navigateToBeerDetail.observe(viewLifecycleOwner, EventObserver { beer ->
-            val action = BeerListFragmentDirections.actionListBeerFragmentToDetailFragment(beer.id)
-            navController.navigate(action)
+            navController.navigate(Uri.parse("punkappsample://beer/${beer.id}"))
         })
 
         viewModel.error.observe(viewLifecycleOwner, EventObserver {

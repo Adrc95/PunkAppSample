@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
 }
 
@@ -26,7 +27,13 @@ android {
     }
 }
 dependencies {
+    implementation(project(":core:common"))
+    implementation(project(":feature:beers:domain"))
+    implementation(project(":feature:beers:data"))
+    implementation(libs.arrow.core)
+    implementation(libs.inject.javax.inject)
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
+    implementation(libs.kotlin.serialization.json)
     ksp(libs.room.compiler)
 }

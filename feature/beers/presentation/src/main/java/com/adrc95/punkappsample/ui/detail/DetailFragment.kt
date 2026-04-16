@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.adrc95.domain.model.Beer
-import com.adrc95.punkappsample.R
-import com.adrc95.punkappsample.databinding.FragmentDetailBinding
+import com.adrc95.feature.beers.presentation.databinding.FragmentDetailBinding
+import com.adrc95.feature.beers.presentation.R
 import com.adrc95.punkappsample.ui.common.EventObserver
 import com.adrc95.punkappsample.ui.common.extension.joinToBulletList
 import com.adrc95.punkappsample.ui.common.extension.loadUrl
@@ -16,7 +16,6 @@ import com.adrc95.punkappsample.ui.common.extension.setVisible
 import com.adrc95.punkappsample.ui.common.view.BaseFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -42,7 +41,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
     }
 
      private fun initializeEvents() {
-        viewModel.error.observe(this, EventObserver {
+        viewModel.error.observe(viewLifecycleOwner, EventObserver {
             showLoading()
             displayLoadingError()
         })

@@ -58,14 +58,14 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:ui"))
     implementation(project(":core:network"))
+    implementation(project(":core:database"))
     implementation(project(":feature:beers:presentation"))
     implementation(project(":feature:beers:domain"))
     implementation(project(":feature:beers:data"))
+    implementation(project(":feature:splash:presentation"))
     //KOTLIN
     implementation(libs.kotlin.coroutines.android)
-    implementation(libs.kotlin.coroutines.core)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.kotlin.serialization.json)
     implementation(libs.kotlin.serialization.json)
     // ANDROID
     implementation(libs.androidx.appcompat)
@@ -74,18 +74,12 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.recyclerview )
-    implementation(libs.androidx.swiperefreshlayout)
     // DAGGER HILT
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.lifecycle.viewmodel)
     implementation(libs.retrofit.core)
+    implementation(libs.retrofit.kotlin.serialization)
     implementation(libs.okhttp.logging)
     implementation(libs.room.runtime)
-    //GLIDE
-    implementation(libs.glide.core)
-    ksp(libs.glide.compiler)
-    //SHIMMER
-    implementation(libs.shimmer)
 }

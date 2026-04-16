@@ -3,11 +3,10 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
-    alias(libs.plugins.navigation.safe.args)
 }
 
 android {
-    namespace = "com.adrc95.punkappsample"
+    namespace = "com.adrc95.feature.beers.presentation"
     compileSdk {
         version = release(37)
     }
@@ -37,7 +36,6 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.kotlin.coroutines.android)
-    implementation(libs.kotlin.coroutines.core)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)

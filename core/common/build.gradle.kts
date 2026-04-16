@@ -26,6 +26,5 @@ android {
 }
 dependencies {
     implementation(libs.arrow.core)
-    implementation(libs.inject.javax.inject)
     implementation(libs.retrofit.core)
 }

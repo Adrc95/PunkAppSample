@@ -1,9 +1,9 @@
-package com.adrc95.punkappsample.di
+﻿package com.adrc95.punkappsample.di
 
-import com.adrc95.data.source.BeersLocalDataSource
-import com.adrc95.data.source.BeersNetworkDataSource
-import com.adrc95.punkappsample.data.datasource.LocalBeersDataSource
-import com.adrc95.punkappsample.data.datasource.RemoteBeersDataSource
+import com.adrc95.core.database.datasource.RoomBeersDataSource
+import com.adrc95.core.network.datasource.RetrofitBeersDataSource
+import com.adrc95.feature.beers.data.datasource.BeersLocalDataSource
+import com.adrc95.feature.beers.data.datasource.BeersNetworkDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,8 +13,8 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 abstract class DataSourceModule {
     @Binds
-    abstract fun bindBeersDataSource(remote : RemoteBeersDataSource): BeersNetworkDataSource
+    abstract fun bindBeersDataSource(remote: RetrofitBeersDataSource): BeersNetworkDataSource
 
     @Binds
-    abstract fun bindLocalBeersDataSource(local : LocalBeersDataSource): BeersLocalDataSource
+    abstract fun bindLocalBeersDataSource(local: RoomBeersDataSource): BeersLocalDataSource
 }
