@@ -28,4 +28,5 @@ dependencies {
     implementation(project(":core:common"))
     implementation(libs.arrow.core)
     implementation(libs.inject.javax.inject)
+    implementation(libs.kotlin.coroutines.core)
 }

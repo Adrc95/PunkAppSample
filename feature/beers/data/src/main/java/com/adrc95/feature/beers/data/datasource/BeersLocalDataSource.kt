@@ -1,12 +1,15 @@
 package com.adrc95.feature.beers.data.datasource
 
-import arrow.core.Either
-import com.adrc95.domain.exception.ApiError
 import com.adrc95.domain.model.Beer
+import kotlinx.coroutines.flow.Flow
 
 interface BeersLocalDataSource {
 
-    suspend fun saveBeer(beer: Beer): Either<ApiError, Unit>
+    suspend fun saveBeer(beer: Beer)
 
-    suspend fun getBeer(id: Long) : Either<ApiError, Beer>
+    suspend fun saveBeers(page: Int, itemsPerPage: Int, beers: List<Beer>)
+
+    suspend fun getBeer(id: Long): Beer?
+
+    fun getBeers(page: Int, itemsPerPage: Int): Flow<List<Beer>>
 }

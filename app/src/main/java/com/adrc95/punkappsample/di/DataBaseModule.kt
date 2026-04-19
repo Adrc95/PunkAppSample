@@ -2,6 +2,7 @@
 
 import android.content.Context
 import androidx.room.Room
+import com.adrc95.core.database.dao.BeerPageCacheDao
 import com.adrc95.core.database.db.AppDatabase
 import com.adrc95.core.database.dao.PunkDao
 import dagger.Module
@@ -26,5 +27,9 @@ object DataBaseModule {
     @Provides
     @Singleton
     fun providesPunkDao(db: AppDatabase): PunkDao = db.punkDao()
+
+    @Provides
+    @Singleton
+    fun providesBeerPageCacheDao(db: AppDatabase): BeerPageCacheDao = db.beerPageCacheDao()
 }
 

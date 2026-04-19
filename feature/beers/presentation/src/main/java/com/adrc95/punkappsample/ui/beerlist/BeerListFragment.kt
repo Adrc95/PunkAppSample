@@ -1,58 +1,40 @@
 package com.adrc95.punkappsample.ui.beerlist
 
-import android.net.Uri
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.adrc95.domain.model.Beer
-import com.adrc95.feature.beers.presentation.databinding.FragmentBeerListBinding
 import com.adrc95.feature.beers.presentation.R
+import com.adrc95.feature.beers.presentation.databinding.FragmentBeerListBinding
+import com.adrc95.punkappsample.ui.beerlist.actions.buildBeerListUiActions
+import com.adrc95.punkappsample.ui.beerlist.adapter.BeerAdapter
+import com.adrc95.punkappsample.ui.beerlist.state.BeerListViewEvent
 import com.adrc95.punkappsample.ui.common.EndlessRecyclerOnScrollListener
-import com.adrc95.punkappsample.ui.common.EventObserver
+import com.adrc95.punkappsample.ui.common.extension.diff
+import com.adrc95.punkappsample.ui.common.extension.launchAndCollect
 import com.adrc95.punkappsample.ui.common.extension.setVisible
 import com.adrc95.punkappsample.ui.common.view.BaseFragment
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class BeerListFragment : BaseFragment<FragmentBeerListBinding>(), SearchView.OnQueryTextListener {
 
-    private val adapter: BeerAdapter by lazy {
-        BeerAdapter(viewModel::onBeerClicked)
-    }
+    private val adapter: BeerAdapter by lazy { BeerAdapter(viewModel::onBeerClicked) }
 
     private val viewModel: BeerListViewModel by viewModels()
 
-    private lateinit var navController: NavController
-
     private lateinit var scrollListener: EndlessRecyclerOnScrollListener
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        scrollListener.resetState()
-        viewModel.onRefreshBeers()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_search, menu)
-        val searchItem: MenuItem = menu.findItem(R.id.searchBar)
-        val searchView = searchItem.actionView as SearchView
-        searchView.queryHint = getString(R.string.hint_search)
-        searchView.setOnQueryTextListener(this)
-        searchView.isIconified = true
-        searchView.maxWidth = Integer.MAX_VALUE
-    }
+    private val uiActions by lazy { buildBeerListUiActions() }
 
     override fun bindView(
         layoutInflater: LayoutInflater,
@@ -60,38 +42,68 @@ class BeerListFragment : BaseFragment<FragmentBeerListBinding>(), SearchView.OnQ
     ): FragmentBeerListBinding =
         FragmentBeerListBinding.inflate(layoutInflater, container, false)
 
+    override fun onDestroyView() {
+        binding.rvBeers.adapter = null
+        super.onDestroyView()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initializeNavController()
         initPullDownRefresh()
         initializeList()
-        initializeNavigation()
+        initializeMenu()
+        initializeState()
         initializeEvents()
     }
 
-    private fun initializeNavController() {
-        navController = findNavController()
-    }
-
     private fun initializeEvents() {
-        viewModel.error.observe(viewLifecycleOwner, EventObserver {
-            displayLoadingError()
-        })
+        viewLifecycleOwner.launchAndCollect(viewModel.events) { event ->
+            when (event) {
+                is BeerListViewEvent.ShowError -> uiActions.showLoadingError(binding.root)
 
-    }
+                is BeerListViewEvent.NavigateToBeerDetail -> uiActions.openBeerDetail(event.beer)
 
-    override fun initFlows() {
-        launch {
-            viewModel.state.collect {
-                manageState(it)
+                is BeerListViewEvent.EnableEndlessScroll ->
+                    scrollListener.enabledScrollEnd = event.enabled
             }
         }
     }
 
+    private fun initializeMenu() {
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.menu_search, menu)
+                    configureSearchView(menu.findItem(R.id.searchBar))
+                }
+
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean = false
+            },
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
+    }
+
+    private fun configureSearchView(searchItem: MenuItem) {
+        val searchView = searchItem.actionView as SearchView
+        searchView.queryHint = getString(R.string.hint_search)
+        searchView.isIconified = true
+        searchView.setOnQueryTextListener(this)
+    }
+
+    private fun initializeState() = with(viewModel.state) {
+        diff(viewLifecycleOwner, { it.isLoading }) { isLoading ->
+            if (isLoading) {
+                showLoading()
+            } else {
+                hideLoading()
+            }
+        }
+        diff(viewLifecycleOwner, { it.beers }) { beers -> adapter.submitList(beers) }
+    }
+
     private fun initializeList() {
-        val layoutManager = LinearLayoutManager(requireContext())
-        layoutManager.orientation = LinearLayoutManager.VERTICAL
-        binding.rvBeers.layoutManager = layoutManager
+        val layoutManager = binding.rvBeers.layoutManager as LinearLayoutManager
         binding.rvBeers.itemAnimator = null
         binding.rvBeers.setHasFixedSize(true)
         binding.rvBeers.adapter = adapter
@@ -111,54 +123,6 @@ class BeerListFragment : BaseFragment<FragmentBeerListBinding>(), SearchView.OnQ
         }
     }
 
-    private fun initializeNavigation() {
-        viewModel.navigateToBeerDetail.observe(viewLifecycleOwner, EventObserver { beer ->
-            navController.navigate(Uri.parse("punkappsample://beer/${beer.id}"))
-        })
-
-        viewModel.error.observe(viewLifecycleOwner, EventObserver {
-            displayLoadingError()
-        })
-
-        viewModel.enabledEndlessScroll.observe(viewLifecycleOwner, EventObserver {
-            enabledEndlessScroll(it)
-        })
-    }
-
-
-    private fun manageState(state: BeerListViewState) {
-
-        if (state is BeerListViewState.Loading) {
-            showLoading()
-        } else {
-            hideLoading()
-        }
-
-        when (state) {
-            is BeerListViewState.ShowBeers -> {
-                renderBeers(state.beers, state.refresh)
-            }
-
-            is BeerListViewState.LoadBeers -> {
-                viewModel.onLoadBeers()
-            }
-
-            is BeerListViewState.ChangeSearchText -> {
-                changeSearchText(state.query)
-            }
-
-            else -> {}
-        }
-    }
-
-    private fun enabledEndlessScroll(enabled: Boolean) {
-        scrollListener.enabledScrollEnd = enabled
-    }
-
-    private fun changeSearchText(query: String) {
-        adapter.filter.filter(query)
-    }
-
     private fun showLoading() = with(binding) {
         refreshLayout.isRefreshing = true
         shimmerViewContainer.setVisible(true)
@@ -169,27 +133,8 @@ class BeerListFragment : BaseFragment<FragmentBeerListBinding>(), SearchView.OnQ
         shimmerViewContainer.setVisible(false)
     }
 
-    private fun renderBeers(beers: List<Beer>, refresh: Boolean) {
-        if (refresh) {
-            adapter.beers = beers
-        } else {
-            adapter.beers = adapter.beers + beers
-        }
-    }
+    override fun onQueryTextSubmit(query: String?): Boolean = false
 
-    private fun displayLoadingError() {
-        Snackbar.make(binding.root, R.string.loading_beer_error, Snackbar.LENGTH_SHORT)
-            .show()
-    }
-
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        return false
-    }
-
-    override fun onQueryTextChange(newText: String?): Boolean {
-        viewModel.onQueryTextChange(newText)
-        return true
-    }
-
-
+    override fun onQueryTextChange(newText: String?): Boolean =
+        viewModel.onQueryTextChange(newText).let { true }
 }

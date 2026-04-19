@@ -1,7 +1,9 @@
 ﻿package com.adrc95.punkappsample.di
 
 import com.adrc95.core.database.datasource.RoomBeersDataSource
+import com.adrc95.core.database.datasource.RoomBeerPageCacheDataSource
 import com.adrc95.core.network.datasource.RetrofitBeersDataSource
+import com.adrc95.feature.beers.data.datasource.BeerPageCacheLocalDataSource
 import com.adrc95.feature.beers.data.datasource.BeersLocalDataSource
 import com.adrc95.feature.beers.data.datasource.BeersNetworkDataSource
 import dagger.Binds
@@ -17,4 +19,9 @@ abstract class DataSourceModule {
 
     @Binds
     abstract fun bindLocalBeersDataSource(local: RoomBeersDataSource): BeersLocalDataSource
+
+    @Binds
+    abstract fun bindBeerPageCacheLocalDataSource(
+        local: RoomBeerPageCacheDataSource
+    ): BeerPageCacheLocalDataSource
 }

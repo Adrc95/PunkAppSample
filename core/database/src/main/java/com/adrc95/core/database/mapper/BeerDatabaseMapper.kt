@@ -62,8 +62,7 @@ fun Beer.toEntity(): BeerEntity = BeerEntity(
     ingredients = ingredients.toEntity(),
     foodPairings = foodPairings,
     brewersTips = brewersTips,
-    contributedBy = contributedBy,
-    updatedAt = System.currentTimeMillis()
+    contributedBy = contributedBy
 )
 
 private fun IngredientsEntity?.toDomain(): DomainIngredients = DomainIngredients(

@@ -1,4 +1,4 @@
-package com.adrc95.punkappsample.ui.beerlist
+package com.adrc95.punkappsample.ui.beerlist.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

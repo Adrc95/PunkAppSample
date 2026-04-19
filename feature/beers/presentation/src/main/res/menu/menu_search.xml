@@ -5,7 +5,9 @@
     tools:context=".ui.main.MainActivity">
     <item
         android:id="@+id/searchBar"
-        app:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/hint_search"
+        app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         />
 </menu>

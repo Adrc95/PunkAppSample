@@ -57,7 +57,6 @@ abstract class EndlessRecyclerOnScrollListener: RecyclerView.OnScrollListener {
                         (mLayoutManager as StaggeredGridLayoutManager).findLastVisibleItemPositions(
                             null
                         )
-                    // get maximum element within the list
                     lastVisibleItemPosition = getLastVisibleItem(lastVisibleItemPositions)
                 }
                 is GridLayoutManager -> {
@@ -75,7 +74,8 @@ abstract class EndlessRecyclerOnScrollListener: RecyclerView.OnScrollListener {
                 previousTotalItemCount = totalItemCount
             }
 
-            if (!loading && lastVisibleItemPosition + visibleThreshold > totalItemCount && view.adapter!!.itemCount > visibleThreshold) {
+            if (!loading && lastVisibleItemPosition + visibleThreshold >
+                totalItemCount && view.adapter!!.itemCount > visibleThreshold) {
                 currentPage++
                 onLoadMore(currentPage)
                 loading = true

@@ -6,64 +6,57 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.adrc95.domain.model.Beer
-import com.adrc95.feature.beers.presentation.databinding.FragmentDetailBinding
 import com.adrc95.feature.beers.presentation.R
-import com.adrc95.punkappsample.ui.common.EventObserver
+import com.adrc95.feature.beers.presentation.databinding.FragmentDetailBinding
+import com.adrc95.punkappsample.ui.detail.actions.buildDetailUiActions
+import com.adrc95.punkappsample.ui.detail.state.DetailViewEvent
+import com.adrc95.punkappsample.ui.common.extension.diff
 import com.adrc95.punkappsample.ui.common.extension.joinToBulletList
+import com.adrc95.punkappsample.ui.common.extension.launchAndCollect
 import com.adrc95.punkappsample.ui.common.extension.loadUrl
 import com.adrc95.punkappsample.ui.common.extension.renderInHtmlContent
 import com.adrc95.punkappsample.ui.common.extension.setVisible
 import com.adrc95.punkappsample.ui.common.view.BaseFragment
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailFragment : BaseFragment<FragmentDetailBinding>() {
 
     private val viewModel : DetailViewModel by viewModels()
+    private val uiActions by lazy { buildDetailUiActions() }
 
     override fun bindView(
         layoutInflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentDetailBinding = FragmentDetailBinding.inflate(layoutInflater, container, false)
 
-    override fun initFlows() {
-       launch {
-           viewModel.state.collect {
-               manageState(it)
-           }
-       }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initializeState()
         initializeEvents()
     }
 
-     private fun initializeEvents() {
-        viewModel.error.observe(viewLifecycleOwner, EventObserver {
-            showLoading()
-            displayLoadingError()
-        })
+    private fun initializeState() {
+        viewModel.state.diff(viewLifecycleOwner, { it.isLoading }) { isLoading ->
+            if (isLoading) {
+                showLoading()
+            } else {
+                hideLoading()
+            }
+        }
 
+        viewModel.state.diff(viewLifecycleOwner, { it.beer }) { beer ->
+            beer?.let(::renderBeer)
+        }
     }
 
-    private fun manageState(state: DetailViewState) {
-        if (state is DetailViewState.Loading) {
-            showLoading()
-        }
-        else {
-            hideLoading()
-        }
-
-        when (state) {
-            DetailViewState.LoadDetails -> {
-                viewModel.onLoadDetail()
+    private fun initializeEvents() {
+        viewLifecycleOwner.launchAndCollect(viewModel.events) { events ->
+            when (events) {
+                DetailViewEvent.ShowError -> {
+                    showLoading()
+                    uiActions.showLoadingError(binding.root)
+                }
             }
-            is DetailViewState.RenderBeer -> {
-                renderBeer(state.beer)
-            }
-            else -> { }
         }
     }
 
@@ -80,11 +73,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
         tvInfo.renderInHtmlContent(getString(R.string.detail_info_text, maltIngredients, hops, foodPairings))
     }
 
-    private fun displayLoadingError() {
-       Snackbar.make(binding.root, R.string.loading_beer_error, Snackbar.LENGTH_SHORT)
-            .show()
-    }
-
     private fun showLoading() = with(binding) {
         shimmerViewContainer.setVisible(true)
     }
@@ -92,5 +80,4 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
     private fun hideLoading() = with(binding) {
         shimmerViewContainer.setVisible(false)
     }
-
 }

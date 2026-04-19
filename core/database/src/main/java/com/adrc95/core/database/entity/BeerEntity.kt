@@ -40,9 +40,7 @@ data class BeerEntity(
     @ColumnInfo("brewers_tips")
     val brewersTips: String?,
     @ColumnInfo("contributed_by")
-    val contributedBy: String?,
-    @ColumnInfo("updated_at")
-    val updatedAt: Long
+    val contributedBy: String?
 )
 
 @Serializable
