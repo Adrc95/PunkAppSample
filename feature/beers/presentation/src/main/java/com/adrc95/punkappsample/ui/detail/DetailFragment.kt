@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.adrc95.domain.model.Beer
 import com.adrc95.feature.beers.presentation.R
 import com.adrc95.feature.beers.presentation.databinding.FragmentDetailBinding
 import com.adrc95.punkappsample.ui.detail.actions.buildDetailUiActions
+import com.adrc95.punkappsample.ui.detail.model.BeerInfoDisplayModel
 import com.adrc95.punkappsample.ui.detail.state.DetailViewEvent
 import com.adrc95.punkappsample.ui.common.extension.diff
-import com.adrc95.punkappsample.ui.common.extension.joinToBulletList
 import com.adrc95.punkappsample.ui.common.extension.launchAndCollect
 import com.adrc95.punkappsample.ui.common.extension.loadUrl
 import com.adrc95.punkappsample.ui.common.extension.renderInHtmlContent
@@ -60,17 +59,20 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
         }
     }
 
-    private fun renderBeer(beer: Beer) = with(binding) {
-        val abv = beer.abv
-        val maltIngredients = beer.ingredients.malt.map { it.name }.joinToBulletList()
-        val hops =  beer.ingredients.hops.map { it.name }.joinToBulletList()
-        val foodPairings = beer.foodPairings.map { it }.joinToBulletList()
-        ivImage.loadUrl(beer.imageURL)
+    private fun renderBeer(beer: BeerInfoDisplayModel) = with(binding) {
+        ivImage.loadUrl(beer.imageUrl)
         tvIpa.text = beer.name
         tvYear.text = beer.firstBrewed
         tvDescription.text = beer.description
-        tvAbv.text =  getString(R.string.abv_text, abv.toString())
-        tvInfo.renderInHtmlContent(getString(R.string.detail_info_text, maltIngredients, hops, foodPairings))
+        tvAbv.text = getString(R.string.abv_text, beer.abv)
+        tvInfo.renderInHtmlContent(
+            getString(
+                R.string.detail_info_text,
+                beer.maltIngredients,
+                beer.hops,
+                beer.foodPairings,
+            )
+        )
     }
 
     private fun showLoading() = with(binding) {

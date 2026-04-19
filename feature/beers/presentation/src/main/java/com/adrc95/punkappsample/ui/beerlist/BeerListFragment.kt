@@ -60,7 +60,7 @@ class BeerListFragment : BaseFragment<FragmentBeerListBinding>(), SearchView.OnQ
             when (event) {
                 is BeerListViewEvent.ShowError -> uiActions.showLoadingError(binding.root)
 
-                is BeerListViewEvent.NavigateToBeerDetail -> uiActions.openBeerDetail(event.beer)
+                is BeerListViewEvent.NavigateToBeerDetail -> uiActions.openBeerDetail(event.beerId)
 
                 is BeerListViewEvent.EnableEndlessScroll ->
                     scrollListener.enabledScrollEnd = event.enabled

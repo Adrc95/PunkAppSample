@@ -3,6 +3,7 @@ package com.adrc95.punkappsample.ui.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adrc95.domain.usecase.GetBeer
+import com.adrc95.punkappsample.ui.detail.mapper.toDisplayModel
 import com.adrc95.punkappsample.ui.detail.state.DetailUiState
 import com.adrc95.punkappsample.ui.detail.state.DetailViewEvent
 import com.adrc95.punkappsample.ui.di.qualifier.BeerId
@@ -51,7 +52,7 @@ class DetailViewModel @Inject constructor(
                 _state.update { state->
                     state.copy(
                         isLoading = false,
-                        beer = it,
+                        beer = it.toDisplayModel(),
                     )
                 }
             })

@@ -2,10 +2,11 @@ package com.adrc95.punkappsample.ui.beerlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.adrc95.domain.model.Beer
 import com.adrc95.domain.usecase.FilterBeers
 import com.adrc95.domain.usecase.GetBeers
 import com.adrc95.domain.usecase.RefreshBeers
+import com.adrc95.punkappsample.ui.beerlist.mapper.toDisplayModel
+import com.adrc95.punkappsample.ui.beerlist.model.BeerDisplayModel
 import com.adrc95.punkappsample.ui.beerlist.state.BeerListUiState
 import com.adrc95.punkappsample.ui.beerlist.state.BeerListViewEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -49,8 +50,8 @@ class BeerListViewModel @Inject constructor(
         loadBeers(page)
     }
 
-    fun onBeerClicked(beer: Beer) {
-        _events.tryEmit(BeerListViewEvent.NavigateToBeerDetail(beer))
+    fun onBeerClicked(beer: BeerDisplayModel) {
+        _events.tryEmit(BeerListViewEvent.NavigateToBeerDetail(beer.id))
     }
 
     fun onRefreshBeers() {
@@ -77,7 +78,7 @@ class BeerListViewModel @Inject constructor(
         _state.update { state ->
             state.copy(
                 query = normalizedQuery,
-                beers = filterBeers(state.allBeers, normalizedQuery),
+                beers = filterBeers(state.allBeers, normalizedQuery).map { it.toDisplayModel() },
             )
         }
         _events.tryEmit(BeerListViewEvent.EnableEndlessScroll(normalizedQuery.isEmpty()))
@@ -92,7 +93,7 @@ class BeerListViewModel @Inject constructor(
                         currentPage = page,
                         isLoading = false,
                         allBeers = beers,
-                        beers = filterBeers(beers, state.query),
+                        beers = filterBeers(beers, state.query).map { it.toDisplayModel() },
                     )
                 }
             }
