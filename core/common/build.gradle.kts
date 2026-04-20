@@ -27,4 +27,6 @@ android {
 dependencies {
     implementation(libs.arrow.core)
     implementation(libs.retrofit.core)
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlin.coroutines.test)
 }
