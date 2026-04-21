@@ -28,7 +28,7 @@ class RoomBeersDataSource @Inject constructor(private val punkDao: PunkDao) :
         punkDao.getBeer(id)?.toDomain()
 
     override fun getBeers(page: Int, itemsPerPage: Int): Flow<List<Beer>> =
-        punkDao.observeBeers(page, itemsPerPage)
+        punkDao.getBeers(page, itemsPerPage)
             .map { beers -> beers.map { it.toDomain() } }
 
 }

@@ -32,7 +32,7 @@ interface PunkDao {
         ORDER BY p.position ASC
         """
     )
-    fun observeBeers(page: Int, itemsPerPage: Int): Flow<List<BeerEntity>>
+    fun getBeers(page: Int, itemsPerPage: Int): Flow<List<BeerEntity>>
 
     @Query("DELETE FROM beer_page_entries WHERE page = :page AND items_per_page = :itemsPerPage")
     suspend fun deletePageEntries(page: Int, itemsPerPage: Int)

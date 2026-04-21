@@ -21,7 +21,7 @@ class RequestConverters {
 
     @TypeConverter
     fun jsonStrToIngredients(jsonStr: String?): IngredientsEntity? = jsonStr?.let {
-        Json.decodeFromString<IngredientsEntity>(it)
+        Json.decodeFromString<IngredientsEntity?>(it)
     }
 
     @TypeConverter
@@ -29,7 +29,7 @@ class RequestConverters {
 
     @TypeConverter
     fun jsonStrToBoilVolume(jsonStr: String?): BoilVolumeEntity? = jsonStr?.let {
-        Json.decodeFromString<BoilVolumeEntity>(it)
+        Json.decodeFromString<BoilVolumeEntity?>(it)
     }
 
     @TypeConverter
@@ -37,7 +37,7 @@ class RequestConverters {
 
     @TypeConverter
     fun jsonStrToMethod(jsonStr: String?): MethodEntity? = jsonStr?.let {
-        Json.decodeFromString<MethodEntity>(it)
+        Json.decodeFromString<MethodEntity?>(it)
     }
 
 }
