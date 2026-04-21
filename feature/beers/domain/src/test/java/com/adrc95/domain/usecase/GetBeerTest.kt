@@ -1,7 +1,6 @@
 package com.adrc95.domain.usecase
 
 import arrow.core.Either
-import com.adrc95.domain.builder.BeerBuilder
 import com.adrc95.domain.builder.beer
 import com.adrc95.domain.exception.BeerNotFound
 import com.adrc95.domain.repository.FakeBeerRepository
@@ -32,7 +31,7 @@ class GetBeerTest {
     @Test
     fun `given missing beer when invoke then returns beer not found`() = runTest {
         //Given
-        val beer = BeerBuilder().beer { withId(1L) }
+        val beer = beer { withId(1L) }
         val repository = FakeBeerRepository().apply {
             setBeers(page = 1, items = listOf(beer))
         }

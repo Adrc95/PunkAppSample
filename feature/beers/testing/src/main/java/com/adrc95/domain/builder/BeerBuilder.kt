@@ -99,9 +99,6 @@ class BeerBuilder {
         brewersTips = brewersTips,
         contributedBy = contributedBy
     )
-
-    fun beer(block: BeerBuilder.() -> Unit = {}) = BeerBuilder().apply(block).build()
 }
 
-fun beer(block: BeerBuilder.() -> Unit = {}): Beer =
-    BeerBuilder().apply(block).build()
+fun beer(block: BeerBuilder.() -> Unit = {}) = BeerBuilder().apply(block).build()
