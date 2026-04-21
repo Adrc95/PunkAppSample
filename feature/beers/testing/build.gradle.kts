@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.adrc95.feature.beers.domain"
+    namespace = "com.adrc95.feature.beers.testing"
     compileSdk {
         version = release(37)
     }
@@ -24,14 +24,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 }
+
 dependencies {
-    implementation(project(":core:common"))
+    api(project(":feature:beers:domain"))
+    api(project(":core:common"))
     implementation(libs.arrow.core)
-    implementation(libs.inject.javax.inject)
     implementation(libs.kotlin.coroutines.core)
-    testImplementation(libs.junit)
-    testImplementation(libs.kotlin.coroutines.test)
-    testImplementation(libs.arrow.core)
-    testImplementation(libs.io.mockk)
-    testImplementation(project(":feature:beers:testing"))
 }

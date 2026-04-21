@@ -92,14 +92,14 @@ class BeerListFragment : BaseFragment<FragmentBeerListBinding>(), SearchView.OnQ
     }
 
     private fun initializeState() = with(viewModel.state) {
-        diff(viewLifecycleOwner, { it.isLoading }) { isLoading ->
+        diff(viewLifecycleOwner, { it.pageContent.isLoading }) { isLoading ->
             if (isLoading) {
                 showLoading()
             } else {
                 hideLoading()
             }
         }
-        diff(viewLifecycleOwner, { it.beers }) { beers -> adapter.submitList(beers) }
+        diff(viewLifecycleOwner, { it.pageContent.beers }) { beers -> adapter.submitList(beers) }
     }
 
     private fun initializeList() {

@@ -8,14 +8,14 @@ import com.adrc95.punkappsample.ui.detail.state.DetailUiState
 import com.adrc95.punkappsample.ui.detail.state.DetailViewEvent
 import com.adrc95.punkappsample.ui.di.qualifier.BeerId
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,39 +23,29 @@ class DetailViewModel @Inject constructor(
     @param:BeerId private val idBeer: Long,
     private val getBeer: GetBeer,
 ) : ViewModel() {
-
-    private val _state = MutableStateFlow(DetailUiState())
-    val state: StateFlow<DetailUiState> = _state.asStateFlow()
-
     private val _events = MutableSharedFlow<DetailViewEvent>(extraBufferCapacity = 1)
     val events: SharedFlow<DetailViewEvent> = _events.asSharedFlow()
 
-    init {
-        loadBeer()
-    }
-
-    private fun loadBeer() {
-        _state.update { state->
-            state.copy(
-                isLoading = true,
-            )
-        }
-        viewModelScope.launch {
-            getBeer.invoke(idBeer).fold(ifLeft = {
-                _state.update { state->
-                    state.copy(
-                        isLoading = false,
-                    )
-                }
+    val state: StateFlow<DetailUiState> = flow {
+        emit(getBeer(idBeer))
+    }.transform { result ->
+        result.fold(
+            ifLeft = {
                 _events.tryEmit(DetailViewEvent.ShowError)
-            }, ifRight = {
-                _state.update { state->
-                    state.copy(
+                emit(DetailUiState(isLoading = false))
+            },
+            ifRight = {
+                emit(
+                    DetailUiState(
                         isLoading = false,
                         beer = it.toDisplayModel(),
                     )
-                }
-            })
-        }
-    }
+                )
+            }
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = DetailUiState(),
+    )
 }

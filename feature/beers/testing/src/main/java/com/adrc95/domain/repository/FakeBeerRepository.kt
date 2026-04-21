@@ -8,11 +8,12 @@ import com.adrc95.domain.exception.BeerNotFound
 import com.adrc95.domain.model.Beer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 
 class FakeBeerRepository : BeerRepository {
     private val beersByPage = MutableStateFlow<Map<Int, List<Beer>>>(emptyMap())
+    private var refreshBeersError: ApiError? = null
 
     override fun getBeers(page: Int): Flow<List<Beer>> =
         beersByPage.asStateFlow().map { pages -> pages[page].orEmpty() }
@@ -23,10 +24,14 @@ class FakeBeerRepository : BeerRepository {
         }
     }
 
+    fun setRefreshBeersError(error: ApiError?) {
+        refreshBeersError = error
+    }
+
     override suspend fun refreshBeers(
         page: Int,
         force: Boolean
-    ): ApiError? = null
+    ): ApiError? = refreshBeersError
 
     override suspend fun getBeer(id: Long): Either<ApiError, Beer> =
         beersByPage.value.values

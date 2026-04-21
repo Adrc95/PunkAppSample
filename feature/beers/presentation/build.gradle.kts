@@ -49,4 +49,10 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.lifecycle.viewmodel)
     implementation(libs.shimmer)
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlin.coroutines.test)
+    testImplementation(libs.arrow.core)
+    testImplementation(libs.io.mockk)
+    testImplementation(libs.turbine)
+    testImplementation(project(":feature:beers:testing"))
 }
