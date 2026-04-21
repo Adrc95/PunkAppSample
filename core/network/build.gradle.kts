@@ -33,4 +33,9 @@ dependencies {
     implementation(libs.inject.javax.inject)
     implementation(libs.kotlin.serialization.json)
     implementation(libs.retrofit.core)
+    implementation(libs.retrofit.kotlin.serialization)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockwebserver)
+    testImplementation(libs.kotlin.coroutines.test)
+    testImplementation(project(":feature:beers:testing"))
 }
