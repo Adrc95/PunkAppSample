@@ -18,7 +18,7 @@ android {
         targetSdk = 37
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.adrc95.punkappsample.HiltTestRunner"
     }
 
     buildTypes {
@@ -52,6 +52,10 @@ android {
     kotlin {
         jvmToolchain(17)
     }
+
+    sourceSets {
+        getByName("androidTest").assets.srcDir("../core/network/src/test/resources")
+    }
 }
 
 dependencies {
@@ -82,4 +86,11 @@ dependencies {
     implementation(libs.retrofit.kotlin.serialization)
     implementation(libs.okhttp.logging)
     implementation(libs.room.runtime)
+    androidTestImplementation(libs.arrow.core)
+    androidTestImplementation(libs.kotlin.coroutines.test)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.compiler)
+    androidTestImplementation(libs.mockwebserver)
 }

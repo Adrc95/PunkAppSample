@@ -37,5 +37,8 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.mockwebserver)
     testImplementation(libs.kotlin.coroutines.test)
+    androidTestImplementation(libs.junit)
+    androidTestImplementation(libs.mockwebserver)
+    androidTestImplementation(libs.kotlin.coroutines.test)
     testImplementation(project(":feature:beers:testing"))
 }

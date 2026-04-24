@@ -7,7 +7,3 @@ plugins {
     alias(libs.plugins.navigation.safe.args) apply false
     alias(libs.plugins.android.library) apply false
 }
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
