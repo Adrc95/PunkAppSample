@@ -32,6 +32,7 @@ inject = "1"
 turbine = "1.2.1"
 mockk = "1.14.9"
 mockwebserver = "5.3.2"
+detekt = "1.23.8"
 
 [libraries]
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
@@ -81,3 +82,4 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 navigation-safe-args = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
