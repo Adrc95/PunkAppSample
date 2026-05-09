@@ -1,20 +1,16 @@
 plugins {
-    alias(libs.plugins.android.application)
+    id("punkapp.android.application")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.navigation.safe.args)
 }
+
 android {
     namespace = "com.adrc95.punkappsample"
-    compileSdk {
-        version = release(37)
-    }
 
     defaultConfig {
         applicationId = "com.adrc95.punkappsample"
-        minSdk = 24
-        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "com.adrc95.punkappsample.HiltTestRunner"
@@ -30,11 +26,6 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
     buildFeatures {
         viewBinding = true
         buildConfig = true
@@ -46,10 +37,6 @@ android {
             "UnsafeExperimentalUsageError",
             "UnsafeExperimentalUsageWarning"
         )
-    }
-
-    kotlin {
-        jvmToolchain(17)
     }
 
     sourceSets {

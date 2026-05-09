@@ -13,7 +13,7 @@ class RequestConverters {
 
     @TypeConverter
     fun jsonStrToListString(jsonStr: String?): List<String>? = jsonStr?.let {
-        Json.decodeFromString<List<String>>(it)
+        Json.decodeFromString<List<String>?>(it)
     }
 
     @TypeConverter

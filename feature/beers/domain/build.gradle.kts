@@ -1,36 +1,11 @@
 plugins {
-    alias(libs.plugins.android.library)
+    id("punkapp.android.feature.domain")
 }
 
 android {
     namespace = "com.adrc95.feature.beers.domain"
-    compileSdk {
-        version = release(37)
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
 }
+
 dependencies {
-    implementation(project(":core:common"))
-    implementation(libs.arrow.core)
-    implementation(libs.inject.javax.inject)
-    implementation(libs.kotlin.coroutines.core)
-    testImplementation(libs.junit)
-    testImplementation(libs.kotlin.coroutines.test)
-    testImplementation(libs.arrow.core)
-    testImplementation(libs.io.mockk)
     testImplementation(project(":feature:beers:testing"))
 }

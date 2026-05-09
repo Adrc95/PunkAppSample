@@ -15,36 +15,43 @@ fun Project.configureDetekt() {
         setProperty("config", files("$rootDir/config/detekt.yml"))
     }
 
+    val detektSources = files(
+        "src/main/java",
+        "src/main/kotlin",
+        "src/test/java",
+        "src/test/kotlin",
+        "src/androidTest/java",
+        "src/androidTest/kotlin",
+        "src/sharedTest/java",
+        "src/sharedTest/kotlin"
+    )
+
     tasks.matching { it.name.startsWith("detekt") }.configureEach {
         withGroovyBuilder {
-            "setSource"(
-                files(
-                    "src/main/java",
-                    "src/main/kotlin",
-                    "src/test/java",
-                    "src/test/kotlin",
-                    "src/androidTest/java",
-                    "src/androidTest/kotlin",
-                    "src/sharedTest/java",
-                    "src/sharedTest/kotlin"
-                )
-            )
-            setProperty("jvmTarget", "17")
-            "reports" {
-                "html" {
-                    setProperty("required", true)
-                }
-                "xml" {
-                    setProperty("required", true)
-                }
-                "txt" {
-                    setProperty("required", false)
-                }
-                "sarif" {
-                    setProperty("required", true)
-                }
-                "md" {
-                    setProperty("required", false)
+            if (!name.contains("GenerateConfig", ignoreCase = true)) {
+                "setSource"(detektSources)
+            }
+            if (
+                !name.contains("Baseline", ignoreCase = true) &&
+                !name.contains("GenerateConfig", ignoreCase = true)
+            ) {
+                setProperty("jvmTarget", "17")
+                "reports" {
+                    "html" {
+                        setProperty("required", true)
+                    }
+                    "xml" {
+                        setProperty("required", true)
+                    }
+                    "txt" {
+                        setProperty("required", false)
+                    }
+                    "sarif" {
+                        setProperty("required", true)
+                    }
+                    "md" {
+                        setProperty("required", false)
+                    }
                 }
             }
         }

@@ -16,6 +16,10 @@ import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+private const val CONNECT_TIMEOUT_SECONDS = 10L
+private const val READ_TIMEOUT_SECONDS = 30L
+private const val WRITE_TIMEOUT_SECONDS = 15L
+
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
@@ -42,9 +46,9 @@ object NetworkModule {
             builder.addInterceptor(loggingInterceptor)
         }
         return builder
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(CONNECT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+            .readTimeout(READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+            .writeTimeout(WRITE_TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .build()
     }
 
