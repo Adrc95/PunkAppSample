@@ -52,19 +52,16 @@ dependencies {
     implementation(project(":feature:beers:presentation"))
     implementation(project(":feature:beers:domain"))
     implementation(project(":feature:beers:data"))
-    //KOTLIN
     implementation(libs.kotlin.coroutines.android)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.kotlin.serialization.json)
-    // ANDROID
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.navigation.fragment)
-    // DAGGER HILT
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.lifecycle.viewmodel)
