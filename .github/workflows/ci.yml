@@ -41,9 +41,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           check_name: Unit test results
-          files: |
-            **/build/test-results/testDebugUnitTest/**/*.xml
-            **/build/test-results/test/**/*.xml
+          files: "**/build/test-results/**/TEST-*.xml"
 
   build:
     name: 🏗 Assemble debug APK
