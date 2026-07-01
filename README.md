@@ -179,7 +179,7 @@ The project includes:
 ### Requirements
 
 - Android Studio with Kotlin support
-- JDK 21 or the JDK version required by your local Android setup
+- JDK 17 or the JDK version required by your local Android setup
 - Android SDK installed
 
 ### Run the app

@@ -9,3 +9,16 @@ plugins {
 }
 
 apply(from = "$rootDir/gradle-scripts/detekt.gradle.kts")
+
+tasks.register("unitTestAll") {
+    group = "verification"
+    description = "Runs all unit tests in Android and JVM modules"
+}
+
+subprojects {
+    tasks.matching { it.name == "testDebugUnitTest" || it.name == "test" }.configureEach {
+        rootProject.tasks.named("unitTestAll") {
+            dependsOn(this@configureEach)
+        }
+    }
+}

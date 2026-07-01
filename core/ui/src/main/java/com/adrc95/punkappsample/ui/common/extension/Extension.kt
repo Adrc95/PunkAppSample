@@ -32,7 +32,6 @@ fun View.setVisible(visible: Boolean) {
 }
 
 fun View.isVisible() = visibility == View.VISIBLE
-
 inline fun <T : Any> basicDiffUtil(
     crossinline areItemsTheSame: (T, T) -> Boolean = { old, new -> old == new },
     crossinline areContentsTheSame: (T, T) -> Boolean = { old, new -> old == new }
@@ -43,6 +42,7 @@ inline fun <T : Any> basicDiffUtil(
     override fun areContentsTheSame(oldItem: T, newItem: T): Boolean =
         areContentsTheSame(oldItem, newItem)
 }
+
 
 fun List<String>.joinToBulletList(): String =
     joinToString(prefix = "<ul>", postfix = "</ul>", separator = "\n") {

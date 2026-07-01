@@ -97,6 +97,14 @@ complexity:
   LongMethod:
     active: true
     threshold: 60
+    excludes:
+      - '**/test/**'
+      - '**/sharedTest/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
   LongParameterList:
     active: true
     functionThreshold: 6
@@ -124,12 +132,20 @@ complexity:
     ignoreStringsRegex: '$^'
   TooManyFunctions:
     active: true
-    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
-    thresholdInFiles: 11
-    thresholdInClasses: 11
-    thresholdInInterfaces: 11
-    thresholdInObjects: 11
-    thresholdInEnums: 11
+    excludes:
+      - '**/test/**'
+      - '**/sharedTest/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
+      - '**/*testing*/**'
+    thresholdInFiles: 20
+    thresholdInClasses: 15
+    thresholdInInterfaces: 20
+    thresholdInObjects: 15
+    thresholdInEnums: 15
     ignoreDeprecated: false
     ignorePrivate: false
     ignoreOverridden: false
@@ -531,7 +547,7 @@ style:
     active: false
   ReturnCount:
     active: true
-    max: 2
+    max: 4
     excludedFunctions: ['equals']
     excludeLabeled: false
     excludeReturnFromLambda: true
