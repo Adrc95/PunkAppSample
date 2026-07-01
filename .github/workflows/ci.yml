@@ -34,14 +34,16 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Run unit tests
-        run: ./gradlew unitTestAll
+        run: ./gradlew unitTestAll --stacktrace
 
       - name: Publish test results
         if: always()
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           check_name: Unit test results
-          files: app/build/test-results/testDebugUnitTest/**/*.xml
+          files: |
+            **/build/test-results/testDebugUnitTest/**/*.xml
+            **/build/test-results/test/**/*.xml
 
   build:
     name: 🏗 Assemble debug APK
